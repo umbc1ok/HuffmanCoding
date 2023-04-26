@@ -47,10 +47,27 @@ namespace LogicTests
             Console.WriteLine(bytes[0].ToString());
             Console.WriteLine(buffer[0].ToString());
             Assert.AreEqual(bytes, buffer);
-            
-            
-            
+        }
+        [TestMethod]
+        public void SerializationAndDeSerialization()
+        {
+            Huffman f = new Huffman();
+            Huffman f2 = new Huffman();
+            f.EncodeAString("HA£ASTRASQUAD LALA");
+            Dictionary<char, int> test = f.occurencesInString;
+            f2.DeserializeOccurences(f.SerializeOccurences());
+            Assert.AreEqual(test, f2.occurencesInString);
         }
 
+
+        [TestMethod]
+        public void ListToByteConversion()
+        {
+            Huffman f = new Huffman();
+            List<bool> temp = f.EncodeAString("HA£ASTRASQUAD LALA");
+            byte[] byteArray = f.ConvertBoolsToBytes(temp);
+            List<bool> temp2 = f.ConvertBytesToBools(byteArray);
+            Assert.AreEqual(temp.Count, temp2.Count);
+        }
     }
 }

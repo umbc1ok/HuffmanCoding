@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace Logic
 {
+    
     public class TreeNode
     {
         public char data;

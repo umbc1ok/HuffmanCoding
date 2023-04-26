@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Text.Json.Serialization;
+using System.Xml;
 
 namespace Logic
 {
@@ -161,11 +165,56 @@ namespace Logic
                 }
             }
             return null;
-            
         }
 
 
+        #region Serialization
+        public byte[] SerializeOccurences()
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            MemoryStream stream = new MemoryStream();
 
+            formatter.Serialize(stream, occurencesInString);
+
+            byte[] serializedData = stream.ToArray();
+            return serializedData;
+        }
+
+        public void DeserializeOccurences(byte[] occurences) {
+            BinaryFormatter formatter = new BinaryFormatter();
+            MemoryStream stream = new MemoryStream(occurences);
+            occurencesInString = (Dictionary<char,int>)formatter.Deserialize(stream);
+        }
+
+
+        public byte[] ConvertBoolsToBytes(List<bool> boolList)
+        {
+            int byteCount = (boolList.Count + 7) / 8; // Round up to the nearest byte
+            byte[] byteArray = new byte[byteCount];
+            for (int i = 0; i < boolList.Count; i++)
+            {
+                if (boolList[i])
+                {
+                    byteArray[i / 8] |= (byte)(1 << (i % 8));
+                }
+            }
+            return byteArray;
+        }
+
+        public List<bool> ConvertBytesToBools(byte[] byteArray)
+        {
+            List<bool> boolList = new List<bool>();
+            foreach (byte b in byteArray)
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    boolList.Add((b & (1 << i)) != 0);
+                }
+            }
+            return boolList;
+
+        }
+        #endregion
 
 
     }
