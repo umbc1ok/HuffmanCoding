@@ -7,23 +7,19 @@ using System.Text.Json.Serialization;
 
 namespace Logic
 {
-    public class SocketTransfer
+    public class FileCreator
     {
 
         byte[] serialziedString;
         byte[] serialziedHuffmanTree;
 
-        public SocketTransfer() { }
+        public FileCreator() { }
 
         public void Serialize(Huffman h, string message)
         {
-            serialziedHuffmanTree= JsonSerializer.SerializeToUtf8Bytes(TreeToString(h.tree.ElementAt(0)));
+            serialziedHuffmanTree = JsonSerializer.SerializeToUtf8Bytes(TreeToString(h.tree.ElementAt(0)));
             serialziedString = JsonSerializer.SerializeToUtf8Bytes(message.ToString());
         }
-
-
-
-
 
 
         public string TreeToString(TreeNode root)

@@ -1,6 +1,7 @@
 
 using Logic;
 using NuGet.Frameworks;
+using System.Net;
 
 namespace LogicTests
 {
@@ -37,6 +38,19 @@ namespace LogicTests
             Assert.AreEqual(decoded, "HA£ASTRASQUAD LALA");
         }
 
+        [TestMethod]
+        public void CommsTest()
+        {
+            byte[] bytes = { 255, 232 };
+            Task.Run(() => { Client.SendData(bytes); });
+            byte[] buffer = Server.ReceiveData();
+            Console.WriteLine(bytes[0].ToString());
+            Console.WriteLine(buffer[0].ToString());
+            Assert.AreEqual(bytes, buffer);
+            
+            
+            
+        }
 
     }
 }
