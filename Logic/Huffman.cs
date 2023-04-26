@@ -41,24 +41,26 @@ namespace Logic
         public void buildATree()
         {
             CreateATreeList();
-            while (tree.Count > 2)
+            while (tree.Count > 1)
             {
                 SortRootNodes();
                 TreeNode left = tree[0];
                 TreeNode right = tree[1];
                 tree.Remove(right);
                 tree.Remove(left);
-                TreeNode newNode = new TreeNode(left,right, right.frequency + left.frequency);
+                TreeNode newNode;
+                if (tree.Count == 0)
+                {
+                     newNode = new TreeNode(left, right, 1);
+                }
+                else
+                {
+                     newNode = new TreeNode(left, right, right.frequency + left.frequency);
+                }
                 tree.Add(newNode);
             }
             /* Top node is "virtual", that's why we need to make it separately (because it needs to have frequency == 1 on top)*/
 
-            TreeNode lastLeft = tree[0];
-            TreeNode lastRight = tree[1];
-            tree.Remove(lastRight);
-            tree.Remove(lastLeft);
-            TreeNode newNode2 = new TreeNode(lastLeft, lastRight, 1);
-            tree.Add(newNode2);
 
         }
         public void SetBinaryValues(TreeNode currentNode, List<bool> path)
@@ -88,6 +90,9 @@ namespace Logic
 
         public List<bool> EncodeAString(string str)
         {
+            countOccurences(str);
+            buildATree();
+            SetBinaryValues(tree.ElementAt(0), new List<bool>());
             List<bool> encoded = new List<bool>();
             TreeNode rootNode = tree.ElementAt(0);
             foreach(char c in str)

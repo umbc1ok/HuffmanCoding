@@ -7,6 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <TextBox Margin="89,134,555,160" x:Name="InputBox"></TextBox>
+        <TextBox Margin="575,134,69,160" x:Name="OutputBox"></TextBox>
 
+        <Button Margin="322,326,323,69" Click="Button_Click">Encode</Button>
+     
     </Grid>
 </Window>

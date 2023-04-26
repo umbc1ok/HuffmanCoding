@@ -29,9 +29,9 @@ namespace LogicTests
         public void CodingTest()
         {
             Huffman f = new Huffman();
-            f.countOccurences("HA£ASTRASQUAD LALA");
+            /*f.countOccurences("HA£ASTRASQUAD LALA");
             f.buildATree();
-            f.SetBinaryValues(f.tree.ElementAt(0), new List<bool>());
+            f.SetBinaryValues(f.tree.ElementAt(0), new List<bool>());*/
             List<bool> result = f.EncodeAString("HA£ASTRASQUAD LALA");
             string decoded = f.Decode(result);
             Assert.AreEqual(decoded, "HA£ASTRASQUAD LALA");
