@@ -51,7 +51,9 @@ namespace Logic
                 TreeNode newNode;
                 if (tree.Count == 0)
                 {
-                     newNode = new TreeNode(left, right, 1);
+                    /* Top node is "virtual", that's why we need to make it separately (because it needs to have frequency == 1 on top)*/
+
+                    newNode = new TreeNode(left, right, 1);
                 }
                 else
                 {
@@ -59,7 +61,6 @@ namespace Logic
                 }
                 tree.Add(newNode);
             }
-            /* Top node is "virtual", that's why we need to make it separately (because it needs to have frequency == 1 on top)*/
 
 
         }
