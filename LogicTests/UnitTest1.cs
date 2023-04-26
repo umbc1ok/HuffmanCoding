@@ -1,5 +1,6 @@
 
 using Logic;
+using NuGet.Frameworks;
 
 namespace LogicTests
 {
@@ -28,14 +29,12 @@ namespace LogicTests
         public void CodingTest()
         {
             Huffman f = new Huffman();
-            f.countOccurences("CHA£A");
+            f.countOccurences("HA£ASTRASQUAD LALA");
             f.buildATree();
-            f.AssignCodesToChars(f.tree.ElementAt(0), new List<bool>());
-            List<bool> result = f.EncodeAString("CHA£A");
-            foreach (bool b in result)
-            {
-                Console.Write(b.ToString());
-            }
+            f.SetBinaryValues(f.tree.ElementAt(0), new List<bool>());
+            List<bool> result = f.EncodeAString("HA£ASTRASQUAD LALA");
+            string decoded = f.Decode(result);
+            Assert.AreEqual(decoded, "HA£ASTRASQUAD LALA");
         }
 
 

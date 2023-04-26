@@ -61,25 +61,28 @@ namespace Logic
             tree.Add(newNode2);
 
         }
-        public void AssignCodesToChars(TreeNode node,List<bool> bits)
+        public void SetBinaryValues(TreeNode currentNode, List<bool> path)
         {
-            /*If we go left, we assign 0 
-             * if we go right, we assign 1
-             */
-
-            if (node != null)
+            if (currentNode != null)
             {
-                node.binaryValue = bits;
+                // If we're at the root node, start with an empty path
+                if (path == null)
+                {
+                    path = new List<bool>();
+                }
 
 
-                bits.Add(false);
-                AssignCodesToChars(node.left, bits);
+                currentNode.binaryValue = path;
+                    // Traverse left, appending false to the path
+                    List<bool> leftPath = new List<bool>(path);
+                    leftPath.Add(false);
+                    SetBinaryValues(currentNode.left, leftPath);
 
-                int lastElementIndex = bits.Count - 1;
-                bits.RemoveAt(lastElementIndex);
+                    // Traverse right, appending true to the path
+                    List<bool> rightPath = new List<bool>(path);
+                    rightPath.Add(true);
+                    SetBinaryValues(currentNode.right, rightPath);
 
-                bits.Add(true);
-                AssignCodesToChars(node.right, bits);
             }
         }
 
@@ -97,6 +100,44 @@ namespace Logic
             }
             return encoded;
         }
+        public string Decode(List<bool> bits)
+        {
+            string result = "";
+            while(bits.Count > 0)
+            {
+                List<bool> code = new List<bool>();
+                while (bits.Count != 0)
+                {
+                    code.Add(bits.ElementAt(0));
+                    bits.RemoveAt(0);
+                    char c = FindBitSequenceInTree(tree.ElementAt(0),code);
+                    if (c != '\0')
+                    {
+                        result += c;
+                        code.Clear();
+                    }
+                }
+            }
+            return result;
+        }
+
+        public char FindBitSequenceInTree(TreeNode currentNode, List<bool> bits)
+        {
+            foreach (bool bit in bits)
+            {
+                if (bit == false)
+                {
+                    currentNode = currentNode.left;
+                }
+                else if (bit == true)
+                {
+                    currentNode = currentNode.right;
+                }
+
+            }
+            return currentNode.data;
+        }
+
 
         /* Maybe move this function into TreeNode.cs */
         public List<bool> FindCharInTree(TreeNode currentNode,char c)
