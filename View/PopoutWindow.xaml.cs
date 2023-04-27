@@ -41,7 +41,7 @@ namespace View
         {
             Server server = new Server();
             window.OutputBox.Text = server.ReceiveAndHandleData();
-            window.f.tree = server.f2.tree;
+            window.f = server.f2;
             this.Close();
         }
     }

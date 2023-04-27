@@ -183,7 +183,7 @@ namespace Logic
         public void DeserializeOccurences(byte[] occurences) {
             BinaryFormatter formatter = new BinaryFormatter();
             MemoryStream stream = new MemoryStream(occurences);
-            occurencesInString = (Dictionary<char,int>)formatter.Deserialize(stream);
+            this.occurencesInString = (Dictionary<char,int>)formatter.Deserialize(stream);
         }
 
 
