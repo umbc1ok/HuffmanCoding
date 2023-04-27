@@ -189,30 +189,53 @@ namespace Logic
 
         public byte[] ConvertBoolsToBytes(List<bool> boolList)
         {
-            int byteCount = (boolList.Count + 7) / 8; // Round up to the nearest byte
-            byte[] byteArray = new byte[byteCount];
-            for (int i = 0; i < boolList.Count; i++)
+            int boolCount = boolList.Count;
+            int byteCount = (boolCount + 7) / 8; // Round up to the nearest byte
+            int extraZeroes = byteCount * 8 - boolCount; // Calculate number of zeroes to add
+
+            byte[] byteArray = new byte[byteCount + 1]; // Add extra byte for zero count
+
+            // Add extra zeroes to the last byte
+            for (int i = 0; i < extraZeroes; i++)
+            {
+                byteArray[byteCount] |= (byte)(0 << (7 - i));
+            }
+
+            // Convert bools to bytes
+            for (int i = 0; i < boolCount; i++)
             {
                 if (boolList[i])
                 {
-                    byteArray[i / 8] |= (byte)(1 << (i % 8));
+                    byteArray[i / 8] |= (byte)(1 << (7 - (i % 8)));
                 }
             }
+
+            // Set the last byte to the number of extra zeroes added
+            byteArray[byteCount] |= (byte)extraZeroes;
+
             return byteArray;
         }
 
         public List<bool> ConvertBytesToBools(byte[] byteArray)
         {
             List<bool> boolList = new List<bool>();
-            foreach (byte b in byteArray)
+
+            int byteCount = byteArray.Length - 1; // Ignore the last byte with the zero count
+            int extraZeroes = byteArray[byteCount]; // Get the number of extra zeroes added
+
+            for (int i = 0; i < byteCount; i++)
             {
-                for (int i = 0; i < 8; i++)
+                for (int j = 0; j < 8; j++)
                 {
-                    boolList.Add((b & (1 << i)) != 0);
+                    bool bit = (byteArray[i] & (1 << (7 - j))) != 0;
+                    boolList.Add(bit);
                 }
             }
-            return boolList;
 
+            // Remove the extra zeroes from the end
+            boolList.RemoveRange(boolList.Count - extraZeroes, extraZeroes);
+
+            return boolList;
         }
         #endregion
 
