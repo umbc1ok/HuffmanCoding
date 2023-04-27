@@ -9,6 +9,11 @@ namespace Logic
 {
     public class Server
     {
+        public Huffman f2;
+        public Server() {
+            f2 = new Huffman();
+        }
+
         public static byte[] ReceiveData()
         {
             byte[] bytes = new byte[1048576];
@@ -33,16 +38,16 @@ namespace Logic
             return result;
         }
 
-        public static string ReceiveAndHandleData()
+        public string ReceiveAndHandleData()
         {
             
             byte[] encodedMessageReceived = ReceiveData();
             byte[] SerializedTreeReceived = ReceiveData();
-            Huffman f2 = new Huffman();
             f2.DeserializeOccurences(SerializedTreeReceived);
             f2.buildATree();
-            List<bool> encodedMessageInBools = f2.ConvertBytesToBools(encodedMessageReceived);
-            string result = f2.Decode(encodedMessageInBools);
+            //List<bool> encodedMessageInBools = f2.ConvertBytesToBools(encodedMessageReceived);
+            string result = f2.ConvertBytesToString(encodedMessageReceived);
+            //string result = f2.Decode(encodedMessageInBools);
             return result;
 
         }

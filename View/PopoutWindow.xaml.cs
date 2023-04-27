@@ -33,13 +33,15 @@ namespace View
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
-            Client.HandleAndSendData(inputText, PopoutTextBox.Text);
+            Client.HandleAndSendData(outputText, PopoutTextBox.Text);
             this.Close();
         }   
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            window.InputBox.Text = Server.ReceiveAndHandleData();
+            Server server = new Server();
+            window.OutputBox.Text = server.ReceiveAndHandleData();
+            window.f.tree = server.f2.tree;
             this.Close();
         }
     }

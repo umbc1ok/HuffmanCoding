@@ -23,8 +23,9 @@ namespace Logic
         public static void HandleAndSendData(string message,string IPAddress)
         {
             Huffman f = new Huffman();
-            List<bool> temp = f.EncodeAString(message);
-            byte[] encodedMessage = f.ConvertBoolsToBytes(temp);
+            //List<bool> temp = f.EncodeAString(message);
+
+            byte[] encodedMessage = f.ConvertStringToBytes(message);
             SendData(IPAddress, encodedMessage);
             byte[] SerializedTree = f.SerializeOccurences();
             SendData(IPAddress, SerializedTree);
