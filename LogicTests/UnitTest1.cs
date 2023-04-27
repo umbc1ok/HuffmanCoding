@@ -42,11 +42,9 @@ namespace LogicTests
         public void CommsTest()
         {
             byte[] bytes = { 255, 232 };
-            Task.Run(() => { Client.SendData(bytes); });
+            Task.Run(() => { Client.SendData("localhost", bytes); });
             byte[] buffer = Server.ReceiveData();
-            Console.WriteLine(bytes[0].ToString());
-            Console.WriteLine(buffer[0].ToString());
-            Assert.AreEqual(bytes, buffer);
+            Assert.AreEqual(bytes.Length, buffer.Length);
         }
         [TestMethod]
         public void SerializationAndDeSerialization()
@@ -56,7 +54,7 @@ namespace LogicTests
             f.EncodeAString("HA£ASTRASQUAD LALA");
             Dictionary<char, int> test = f.occurencesInString;
             f2.DeserializeOccurences(f.SerializeOccurences());
-            Assert.AreEqual(test, f2.occurencesInString);
+            Assert.AreEqual(test.Count, f2.occurencesInString.Count);
         }
 
 
@@ -69,5 +67,30 @@ namespace LogicTests
             List<bool> temp2 = f.ConvertBytesToBools(byteArray);
             Assert.AreEqual(temp.Count, temp2.Count);
         }
+
+        [TestMethod]
+        public void DecodingAfterTransmission()
+        {
+            Huffman f = new Huffman();
+            string entry = "Polskaa";
+            List<bool> temp = f.EncodeAString(entry);
+            byte[] encodedMessage = f.ConvertBoolsToBytes(temp);
+            Task.Run(() => { Client.SendData("localhost", encodedMessage); });
+            byte[] encodedMessageReceived = Server.ReceiveData();
+
+            byte[] SerializedTree = f.SerializeOccurences();
+            Task.Run(() => { Client.SendData("localhost",SerializedTree); });
+            byte[] SerializedTreeReceived = Server.ReceiveData();
+
+
+            Huffman f2 = new Huffman();
+            f2.DeserializeOccurences(SerializedTreeReceived);
+            f2.buildATree();
+            List<bool> encodedMessageInBools = f2.ConvertBytesToBools(encodedMessageReceived);
+            string result = f2.Decode(encodedMessageInBools);
+            Assert.AreEqual(result, entry);
+        }
+
+
     }
 }

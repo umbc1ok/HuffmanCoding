@@ -11,7 +11,8 @@ namespace Logic
     {
         public static byte[] ReceiveData()
         {
-            byte[] bytes = new byte[1024];
+            byte[] bytes = new byte[1048576];
+            
             Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             serverSocket.Bind(new IPEndPoint(IPAddress.Any, 12345));
             serverSocket.Listen(1);
@@ -21,12 +22,30 @@ namespace Logic
 
             
             int bytesRead = clientSocket.Receive(bytes);
-
-
+            byte[] result = new byte[bytesRead];
+            for(int i = 0; i < bytesRead; i++)
+            {
+                result[i] = bytes[i];
+            }
             clientSocket.Shutdown(SocketShutdown.Both);
             clientSocket.Close();
             serverSocket.Close();
-            return bytes;
+            return result;
         }
+
+        public static string ReceiveAndHandleData()
+        {
+            
+            byte[] encodedMessageReceived = ReceiveData();
+            byte[] SerializedTreeReceived = ReceiveData();
+            Huffman f2 = new Huffman();
+            f2.DeserializeOccurences(SerializedTreeReceived);
+            f2.buildATree();
+            List<bool> encodedMessageInBools = f2.ConvertBytesToBools(encodedMessageReceived);
+            string result = f2.Decode(encodedMessageInBools);
+            return result;
+
+        }
+
     }
 }

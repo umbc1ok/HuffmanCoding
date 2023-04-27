@@ -7,10 +7,13 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <TextBlock  FontSize="15" Margin="589,102,41,291"> Podglad kodowania</TextBlock>
         <TextBox Margin="89,134,555,160" x:Name="InputBox"></TextBox>
         <TextBox Margin="575,134,69,160" x:Name="OutputBox"></TextBox>
 
         <Button Margin="322,326,323,69" Click="Button_Click">Encode</Button>
-     
+        <Button Margin="589,326,56,69" Click="PopOut" Content="Popout&#xD;&#xA;"/>
+        <TextBlock FontSize="15" Margin="127,98,555,295"><Run Language="pl-pl" Text="Tekst jawny"/><LineBreak/><Run Language="pl-pl"/></TextBlock>
+
     </Grid>
 </Window>

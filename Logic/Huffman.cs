@@ -216,6 +216,24 @@ namespace Logic
         }
         #endregion
 
+        public string ConvertBytesToString(byte[] bytes)
+        {
+            string result = "";
+            foreach(byte character in bytes)
+            {
+                result += (char)character;
+            }
+            return result;
+        }
+        public byte[] ConvertStringToBytes(string message)
+        {
+            byte[] bytelist = new byte[message.Length];
+            for(int i = 0; i<message.Length; i++)
+            {
+                bytelist[i] =  (byte) message.ElementAt(i);
+            }
+            return bytelist;
+        }
 
     }
 }

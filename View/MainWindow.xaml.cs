@@ -32,7 +32,12 @@ namespace View
             Huffman f = new Huffman();
             string text = InputBox.Text;
             List<bool> x = f.EncodeAString(text);
-            OutputBox.Text = f.Decode(x);
+            OutputBox.Text = f.ConvertBytesToString(f.ConvertBoolsToBytes(x));
+        }
+        private void PopOut(object sender, RoutedEventArgs e)
+        {
+            PopoutWindow popout = new PopoutWindow(this);
+            popout.ShowDialog();
         }
     }
 }
