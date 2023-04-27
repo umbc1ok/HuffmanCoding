@@ -33,7 +33,7 @@ namespace View
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
-            Client.HandleAndSendData(outputText, PopoutTextBox.Text);
+            Client.HandleAndSendData(inputText, PopoutTextBox.Text);
             this.Close();
         }   
 
