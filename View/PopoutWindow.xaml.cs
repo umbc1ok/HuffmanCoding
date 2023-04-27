@@ -40,8 +40,7 @@ namespace View
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             Server server = new Server();
-            window.OutputBox.Text = server.ReceiveAndHandleData();
-            window.f = server.f2;
+            window.InputBox.Text = server.ReceiveAndHandleData();
             this.Close();
         }
     }
