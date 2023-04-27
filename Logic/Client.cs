@@ -24,6 +24,8 @@ namespace Logic
         {
             Huffman f = new Huffman();
             List<bool> temp = f.EncodeAString(message);
+
+            //byte[] encodedMessage = f.ConvertStringToBytes(message);
             byte[] encodedMessage = f.ConvertBoolsToBytes(temp);
             SendData(IPAddress, encodedMessage);
             byte[] SerializedTree = f.SerializeOccurences();

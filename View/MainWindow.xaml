@@ -11,9 +11,12 @@
         <TextBox Margin="89,134,555,160" x:Name="InputBox"></TextBox>
         <TextBox Margin="575,134,69,160" x:Name="OutputBox"></TextBox>
 
-        <Button Margin="322,326,323,69" Click="Button_Click">Encode</Button>
-        <Button Margin="589,326,56,69" Click="PopOut" Content="Popout&#xD;&#xA;"/>
+        <Button Margin="337,153,308,242" Click="Button_Click">Encode</Button>
+        <Button Margin="337,349,308,46" Click="PopOut" Content="Transfer using sockets&#xA;"/>
         <TextBlock FontSize="15" Margin="127,98,555,295"><Run Language="pl-pl" Text="Tekst jawny"/><LineBreak/><Run Language="pl-pl"/></TextBlock>
+        <Button Margin="337,235,308,160" Click="Decode" Content="Decode&#xD;&#xA;"/>
+        <Button Margin="112,295,578,111" Click="SaveText" Content="Save to file"/>
+        <Button Margin="598,295,92,111" Click="SaveCode" Content="Save to file"/>
 
     </Grid>
 </Window>
