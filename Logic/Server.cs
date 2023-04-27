@@ -34,16 +34,16 @@ namespace Logic
             return result;
         }
 
-        public string ReceiveAndHandleData()
+        public string ReceiveAndHandleData(Huffman f2)
         {
-            Huffman f2 = new Huffman();
+            //Huffman f2 = new Huffman();
             byte[] encodedMessageReceived = ReceiveData();
             byte[] SerializedTreeReceived = ReceiveData();
             f2.DeserializeOccurences(SerializedTreeReceived);
             f2.buildATree();
             List<bool> encodedMessageInBools = f2.ConvertBytesToBools(encodedMessageReceived);
-            //string result = f2.ConvertBytesToString(encodedMessageReceived);
-            string result = f2.Decode(encodedMessageInBools);
+            string result = f2.ConvertBytesToString(encodedMessageReceived);
+            //string result = f2.Decode(encodedMessageInBools);
             return result;
         }
 

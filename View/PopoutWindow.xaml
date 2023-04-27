@@ -1,21 +1,21 @@
 <Window x:Class="View.PopoutWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="PopoutWindow" Height="600" Width="600">
-    <Grid>
+        Title="PopoutWindow" Height="240" Width="600" ResizeMode="NoResize">
+    <Grid Margin="0,0,0,24">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" FontSize="15" Margin="12" Text="Tu wpisz adres IP urzadzenia, na ktore chcesz przeslac tekst"/>
+        <TextBlock Grid.Row="0" FontSize="15" Margin="12"><Run Language="pl-pl" Text="Enter destination host IP:"/></TextBlock>
 
         <TextBox Grid.Row="1" x:Name="PopoutTextBox" Margin="12"/>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Width="463">
-            <Button Content="Wyslij na inny komputer" Margin="12" Click="OKButton_Click" Height="98" Width="214"/>
-            <Button Content="Odbierz" Click="CancelButton_Click" Height="98" Width="218"/>
+            <Button Content="Send to another computer" Margin="12" Click="OKButton_Click" Height="56" Width="214"/>
+            <Button Content="Receive" Click="CancelButton_Click" Height="55" Width="218"/>
         </StackPanel>
     </Grid>
 </Window>

@@ -76,10 +76,41 @@ namespace View
                 filePath = saveFileDialog.FileName;
                 // Save the file
             }
+            else
+            {
+                return;
+            }
             using (StreamWriter writer = new StreamWriter(filePath))
             {
                 writer.Write(OutputBox.Text);
             }
+        }
+
+        private void LoadText(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog open = new OpenFileDialog();
+            open.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            string filePath;
+            if (open.ShowDialog() == true)
+            {
+                filePath = open.FileName;
+                // Save the file
+            }
+            else
+            {
+                return;
+            }
+            // Create a new StreamReader object to read the file
+            StreamReader reader = new StreamReader(filePath);
+
+            // Read the entire contents of the file as a string
+            string fileContents = reader.ReadToEnd();
+
+            // Close the StreamReader
+            reader.Close();
+
+            // Display the string on the console
+            InputBox.Text = fileContents;
         }
     }
 }
