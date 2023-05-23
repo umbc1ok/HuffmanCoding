@@ -45,6 +45,14 @@ namespace Logic
         public void buildATree()
         {
             CreateATreeList();
+            if (tree.Count == 1)
+            {
+                TreeNode right = tree[0];
+                TreeNode node;
+                node = new TreeNode(right, null, 1);
+                tree.Remove(right);
+                tree.Add(node);
+            }
             while (tree.Count > 1)
             {
                 SortRootNodes();
@@ -56,7 +64,6 @@ namespace Logic
                 if (tree.Count == 0)
                 {
                     /* Top node is "virtual", that's why we need to make it separately (because it needs to have frequency == 1 on top)*/
-
                     newNode = new TreeNode(left, right, 1);
                 }
                 else
@@ -82,12 +89,12 @@ namespace Logic
                 currentNode.binaryValue = path;
                     // Traverse left, appending false to the path
                     List<bool> leftPath = new List<bool>(path);
-                    leftPath.Add(false);
+                    leftPath.Add(true);
                     SetBinaryValues(currentNode.left, leftPath);
 
                     // Traverse right, appending true to the path
                     List<bool> rightPath = new List<bool>(path);
-                    rightPath.Add(true);
+                    rightPath.Add(false);
                     SetBinaryValues(currentNode.right, rightPath);
 
             }
@@ -135,11 +142,11 @@ namespace Logic
         {
             foreach (bool bit in bits)
             {
-                if (bit == false)
+                if (bit == true)
                 {
                     currentNode = currentNode.left;
                 }
-                else if (bit == true)
+                else if (bit == false)
                 {
                     currentNode = currentNode.right;
                 }
